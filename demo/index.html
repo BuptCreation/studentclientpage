@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Miks Collaborative Editor Demo</title>
+        <style>
+            .page {
+                position: relative;
+                width: 900px;
+                margin: 50px auto;
+            }
+            .page .title {
+                text-align: center;
+                font-size: 24px;
+            }
+
+            .page .subtitle {
+                padding: 10px;
+                text-align: center;
+                font-size: 24px;
+            }
+
+            .page .editor {
+                position: relative;
+                margin-top: 32px;
+            }
+
+            .editor-container {
+                padding: 0 90px;
+                min-height: 400px;
+            }
+
+            .page .content {
+                width: 660px;
+                margin: 0 auto;
+                border-style:solid;
+                border-width: 1px;
+                border-color: black;
+            }
+        </style>
+        <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+        <script>
+            $(function () {
+                var url = location.search; //这一条语句获取了包括问号开始到参数的最后，不包括前面的路径
+                var params = url.substr(1);//去掉问号
+                var pa = params.split("&");
+                var s = new Object();
+                for(var i = 0; i < pa.length; i ++){
+                    s[pa[i].split("=")[0]] = unescape(pa[i].split("=")[1]);
+                }
+                alert(s.name+"欢迎进行写作");
+                $("#studentno").val(s.name);
+            })
+        </script>
+    </head>
+    <body>
+        <p>
+            当前用户：
+        </p>
+        <input type="text" id="studentno" placeholder="当前用户的id号">
+        <br>
+        <input type="text" id="textno" placeholder="文章号">
+        <br>
+        <input type="button" id="confirm" value="查找文章">
+        <div></div>
+        <div>文章要求:
+            <br>
+            <input type="text" id="textdescription" value="" placeholder="文章要求" disabled="true">
+        </div>
+        <div class="page">
+            <div class="title">协同英语写作系统</div>
+            <div class="editor">
+                <div class="editor-container" id="container"></div>
+            </div>
+            <div class="subtitle">内容总览</div>
+            <div class="content ql-editor"></div>
+        </div>
+
+        <input type="button" id="savetomongodb" value="保存进数据库">
+    </body>
+</html>
