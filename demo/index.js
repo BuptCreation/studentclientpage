@@ -12,8 +12,6 @@ ShareDB.types.register(richText.type);
 const icons = Quill.import('ui/icons');
 icons['header'][3] = require('!html-loader!quill/assets/icons/header-3.svg');
 import '../display.styl';
-
-
 let quill=null
 let title=null;
 let ws2=new WebSocket("ws://localhost:3335")
@@ -24,7 +22,7 @@ document.getElementById("confirm").onclick=function(){
 
     title=document.getElementById("textno").value
 
-    var data=JSON.stringify({textno:title,studentno:studentno})
+    var data=JSON.stringify({type:"orignal",textno:title,studentno:studentno})
 
     ws2.send(data)
 
@@ -32,6 +30,7 @@ document.getElementById("confirm").onclick=function(){
         var data = JSON.parse(e.data);
         var theindex = 0;
         let authors=[]
+        console.log(data.name)
         if(data.error==="none"){
             for(var i=0;i<data.name.length;i++){
                 authors.push({id:data.id[i],name:data.name[i]})
@@ -42,6 +41,9 @@ document.getElementById("confirm").onclick=function(){
             }
             let testUrl = 'https://yd.wemiks.com/banner-2d980584-yuanben.svg';
             document.getElementById("textdescription").value=data.articledescription
+            console.log(data.datas)
+            window.jsondata=data.datas
+            console.log(data.datas)
             let editorOptions = {
                 authorship: {
                     // author: authors[authorIndex],
@@ -174,12 +176,23 @@ document.getElementById("confirm").onclick=function(){
             alert("您输入的信息有误，请重新输入！")
         }
     }
-    // ws=new WebSocket("ws://localhost:3334")
-    // ws.onopen=function(){
-    //     ws.send(JSON.stringify({title:title,id:id1,studentname:studentname}))
-    // }
-
 }
+
+    document.getElementById("fetchdata").onclick=function(){
+        var data=JSON.stringify({type:"fetchdata",textno:title})
+        ws2.send(data)
+        var dataarray=[]
+        ws2.onmessage=function (data) {
+            console.log(data.data)
+            var datas=JSON.parse(data.data)
+            console.log(datas)
+            for(var i=0;i<datas.authors.length;i++){
+                dataarray.push({value:datas.contributions[i],name:datas.authors[i]})
+            }
+            console.log(dataarray)
+            window.jsondata=dataarray
+        }
+    }
 
 
 
@@ -200,4 +213,7 @@ document.getElementById("confirm").onclick=function(){
              }
          }
     }
-
+    window.onbeforeunload=function () {
+        ws.close()
+        ws2.close()
+    }

@@ -38,6 +38,7 @@
             }
         </style>
         <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+        <script src="./echarts.js"></script>
         <script>
             $(function () {
                 var url = location.search; //这一条语句获取了包括问号开始到参数的最后，不包括前面的路径
@@ -53,28 +54,69 @@
         </script>
     </head>
     <body>
-        <p>
-            当前用户：
-        </p>
-        <input type="text" id="studentno" placeholder="当前用户的id号">
-        <br>
-        <input type="text" id="textno" placeholder="文章号">
-        <br>
-        <input type="button" id="confirm" value="查找文章">
-        <div></div>
-        <div>文章要求:
-            <br>
-            <input type="text" id="textdescription" value="" placeholder="文章要求" disabled="true">
-        </div>
-        <div class="page">
-            <div class="title">协同英语写作系统</div>
-            <div class="editor">
-                <div class="editor-container" id="container"></div>
-            </div>
-            <div class="subtitle">内容总览</div>
-            <div class="content ql-editor"></div>
+        <div class="writepart">
+                <p>
+                    当前用户：
+                </p>
+                <input type="text" id="studentno" placeholder="当前用户的id号">
+                <br>
+                <input type="text" id="textno" placeholder="文章号">
+                <br>
+                <input type="button" id="confirm" value="查找文章">
+                <div></div>
+                <div>文章要求:
+                    <br>
+                    <input type="text" id="textdescription" value="" placeholder="文章要求" disabled="true">
+                </div>
+                <div class="page">
+                    <div class="title">协同英语写作系统</div>
+                    <div class="editor">
+                        <div class="editor-container" id="container"></div>
+                    </div>
+                    <div class="subtitle">内容总览</div>
+                    <div class="content ql-editor"></div>
+                </div>
+
+                <input type="button" id="savetomongodb" value="保存进数据库">
         </div>
 
-        <input type="button" id="savetomongodb" value="保存进数据库">
+
+        <div id="visualpart01" style="width: 500px;height: 500px">      <!--用来显示可视化图表-->
+        </div>
+        <input type="button" id="fetchdata" value="抓取数据">
+        <input type="button" id="checkprocess" value="更新可视化图表">
+        <script type="application/javascript">
+            var myechart
+            document.getElementById("checkprocess").onclick=function () {
+                if (myechart != null && myechart != "" && myechart != undefined) {
+                    myechart.dispose();//销毁
+                }
+                myechart = echarts.init(document.getElementById("visualpart01"))
+                var option = {
+                    title: {
+                        text: '行为分析图表',
+                        left: 'center'
+                    },
+                    series: [
+                        {
+                            name: '写作参与情况',
+                            type: 'pie',
+                            radius: '50%',
+                            // data:window.jsondata,
+                            data: window.jsondata,
+                            emphasis: {
+                                itemStyle: {
+                                    shadowBlur: 10,
+                                    shadowOffsetX: 0,
+                                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                }
+                            }
+                        }
+                    ]
+                }
+                option && myechart.setOption(option)
+            }
+
+        </script>
     </body>
 </html>
