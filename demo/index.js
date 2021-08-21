@@ -15,13 +15,16 @@ import '../display.styl';
 let quill=null
 let title=null;
 let groupid=null;
-let ws2=new WebSocket("ws://localhost:3335")
+let ws2=new WebSocket("ws://localhost:3335");
 // document.getElementById("confirm").onclick=function() {
+let ws3=new WebSocket("ws://localhost:3336")
+
 document.getElementById("confirm").onclick=function(){
 
     var studentno=document.getElementById("studentno").value
 
     title=document.getElementById("textno").value
+
 
     var data=JSON.stringify({type:"orignal",textno:title,studentno:studentno})
 
@@ -137,7 +140,7 @@ document.getElementById("confirm").onclick=function(){
                 console.log(err);
             });
 
-
+            console.log(title)
             let websocketEndpoint = "ws://127.0.0.1:8085";
 
             editor.syncThroughWebsocket(websocketEndpoint, "examples",title);
@@ -231,19 +234,28 @@ document.getElementById("confirm").onclick=function(){
     window.onbeforeunload=function () {
         ws.close()
         ws2.close()
+        ws3.close()
     }
 
-    window.onload=function () {
-        var thestudentno=document.getElementById("studentno").value;
-        ws2.send(JSON.stringify({type:"catchtextno",studentno:thestudentno}));
+    // window.onload=function () {
 
-        ws2.onmessage=function (data) {
-            console.log(data)
-            var datas=JSON.parse(data.data)
-            console.log(datas);
-            var textarrays=datas.textnos;
-            console.log(textarrays)
-            for(var i=0;i<textarrays.length;i++){
-            $("#textno").append("<option value='"+textarrays[i]+"'>"+textarrays[i]+"</option>");
-        }}
+
+
+
+
+
+    document.getElementById("checkarticle").onclick=function () {                       //点击按钮之后从数据库里面加载对应的文章列表
+            var thestudentno = document.getElementById("studentno").value;
+            console.log(thestudentno)
+            ws3.send(JSON.stringify({type: "catchtextno", studentno: thestudentno}));
+            ws3.onmessage = function (data) {
+                console.log(data)
+                var datas = JSON.parse(data.data)
+                console.log(datas);
+                var textarrays = datas.textnos;
+                console.log(textarrays)
+                for (var i = 0; i < textarrays.length; i++) {
+                    $("#textno").append("<option value='" + textarrays[i] + "'>" + textarrays[i] + "</option>");
+                }
+            }
     }
