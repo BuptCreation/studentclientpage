@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Miks Collaborative Editor Demo</title>
+        <title>协同写作平台学生端</title>
         <style>
             .page {
                 position: relative;
@@ -83,18 +83,29 @@
 
         <div id="visualpart01" style="width: 500px;height: 500px">      <!--用来显示可视化图表-->
         </div>
+        <div id="visualpart02" style="width: 500px;height: 500px"></div>
+        <div id="visualpart03" style="width: 500px;height: 500px"></div>
+        <div id="visualpart04" style="width: 500px;height: 500px"></div>
         <input type="button" id="fetchdata" value="抓取数据">
         <input type="button" id="checkprocess" value="更新可视化图表">
         <script type="application/javascript">
             var myechart
+            var myechart1;
+            var myechart2;
             document.getElementById("checkprocess").onclick=function () {
                 if (myechart != null && myechart != "" && myechart != undefined) {
                     myechart.dispose();//销毁
                 }
+                if (myechart1 != null && myechart1 != "" && myechart1 != undefined) {
+                    myechart1.dispose();//销毁
+                }
+                if (myechart2 != null && myechart2 != "" && myechart2 != undefined) {
+                    myechart2.dispose();//销毁
+                }
                 myechart = echarts.init(document.getElementById("visualpart01"))
                 var option = {
                     title: {
-                        text: '行为分析图表',
+                        text: '行为/写作分析图表',
                         left: 'center'
                     },
                     series: [
@@ -115,8 +126,112 @@
                     ]
                 }
                 option && myechart.setOption(option)
-            }
 
+                myechart1 = echarts.init(document.getElementById("visualpart02"))
+                var option1 = {
+                    title: {
+                        text: '行为/登录频率分析图表',
+                        left: 'center'
+                    },
+                    series: [
+                        {
+                            name: '写作参与情况',
+                            type: 'pie',
+                            radius: '50%',
+                            // data:window.jsondata,
+                            data: window.jsondata1,
+                            emphasis: {
+                                itemStyle: {
+                                    shadowBlur: 10,
+                                    shadowOffsetX: 0,
+                                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                }
+                            }
+                        }
+                    ]
+                }
+                option1 && myechart1.setOption(option1)
+
+
+
+                myechart2 = echarts.init(document.getElementById("visualpart03"))       //行为可视化的有关于交谈的扇形图
+                var option2 = {
+                    title: {
+                        text: '行为/交谈频率分析图表',
+                        left: 'center'
+                    },
+                    series: [
+                        {
+                            name: '写作参与情况',
+                            type: 'pie',
+                            radius: '50%',
+                            // data:window.jsondata,
+                            data: window.jsondata2,
+                            emphasis: {
+                                itemStyle: {
+                                    shadowBlur: 10,
+                                    shadowOffsetX: 0,
+                                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                }
+                            }
+                        }
+                    ]
+                }
+                option2 && myechart2.setOption(option2)
+
+
+
+                myechart3=echarts.init(document.getElementById("visualpart04"));
+                window.jsondata3.nodes.forEach(function (node) {
+                    node.label = {
+                        show: node.symbolSize > 30
+                    };
+                });
+                var option5 = {
+                    title: {
+                        text: '社会网络关系图',
+                        top: 'bottom',
+                        left: 'right'
+                    },
+                    tooltip: {},
+                    legend: [{
+                        // selectedMode: 'single',
+                        data: window.jsondata3.categories.map(function (a) {
+                            return a.name;
+                        })
+                    }],
+                    animationDuration: 1500,
+                    animationEasingUpdate: 'quinticInOut',
+                    series: [
+                        {
+                            name: '社会网络关系图',
+                            type: 'graph',
+                            layout: 'none',
+                            data: window.jsondata3.nodes,
+                            links: window.jsondata3.links,
+                            categories: window.jsondata3.categories,
+                            roam: true,
+                            label: {
+                                position: 'right',
+                                formatter: '{b}'
+                            },
+                            lineStyle: {
+                                color: 'source',
+                                curveness: 0.3
+                            },
+                            emphasis: {
+                                focus: 'adjacency',
+                                lineStyle: {
+                                    width: 10
+                                }
+                            }
+                        }
+                    ]
+                };
+
+                myechart3.setOption(option5)
+
+            }
         </script>
     </body>
 </html>

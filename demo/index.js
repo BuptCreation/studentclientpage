@@ -14,6 +14,7 @@ icons['header'][3] = require('!html-loader!quill/assets/icons/header-3.svg');
 import '../display.styl';
 let quill=null
 let title=null;
+let groupid=null;
 let ws2=new WebSocket("ws://localhost:3335")
 // document.getElementById("confirm").onclick=function() {
 document.getElementById("confirm").onclick=function(){
@@ -23,6 +24,8 @@ document.getElementById("confirm").onclick=function(){
     title=document.getElementById("textno").value
 
     var data=JSON.stringify({type:"orignal",textno:title,studentno:studentno})
+
+
 
     ws2.send(data)
 
@@ -44,6 +47,10 @@ document.getElementById("confirm").onclick=function(){
             console.log(data.datas)
             window.jsondata=data.datas
             console.log(data.datas)
+            window.jsondata1=data.datas1
+            console.log(data.datas1)
+            window.jsondata2=data.datas2
+            console.log(data.datas2)
             let editorOptions = {
                 authorship: {
                     // author: authors[authorIndex],
@@ -181,7 +188,9 @@ document.getElementById("confirm").onclick=function(){
     document.getElementById("fetchdata").onclick=function(){
         var data=JSON.stringify({type:"fetchdata",textno:title})
         ws2.send(data)
-        var dataarray=[]
+        var dataarray=[];
+        var dataarray1=[];
+        var dataarray2=[];
         ws2.onmessage=function (data) {
             console.log(data.data)
             var datas=JSON.parse(data.data)
@@ -190,7 +199,13 @@ document.getElementById("confirm").onclick=function(){
                 dataarray.push({value:datas.contributions[i],name:datas.authors[i]})
             }
             console.log(dataarray)
-            window.jsondata=dataarray
+            window.jsondata=dataarray;
+            console.log("button所得",datas.thelogintimes);
+            window.jsondata1=datas.thelogintimes;
+            console.log("button所得",datas.talks);
+            window.jsondata2=datas.talks;
+            console.log("xinde",datas.categoriestosubmit)
+            window.jsondata3=datas.categoriestosubmit;
         }
     }
 
