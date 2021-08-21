@@ -48,7 +48,6 @@
                 for(var i = 0; i < pa.length; i ++){
                     s[pa[i].split("=")[0]] = unescape(pa[i].split("=")[1]);
                 }
-                alert(s.name+"欢迎进行写作");
                 $("#studentno").val(s.name);
             })
         </script>
@@ -60,7 +59,15 @@
                 </p>
                 <input type="text" id="studentno" placeholder="当前用户的id号">
                 <br>
-                <input type="text" id="textno" placeholder="文章号">
+                <br>
+                <br>
+<!--                <input type="text" id="textno" placeholder="文章号">-->
+                <select class="form-control" id="textno" style="width: 200px" value="" placeholder="请选择文章的编号">
+
+                </select>
+                <br>
+                <br>
+                <br>
                 <br>
                 <input type="button" id="confirm" value="查找文章">
                 <div></div>
@@ -151,8 +158,6 @@
                     ]
                 }
                 option1 && myechart1.setOption(option1)
-
-
 
                 myechart2 = echarts.init(document.getElementById("visualpart03"))       //行为可视化的有关于交谈的扇形图
                 var option2 = {

@@ -232,3 +232,18 @@ document.getElementById("confirm").onclick=function(){
         ws.close()
         ws2.close()
     }
+
+    window.onload=function () {
+        var thestudentno=document.getElementById("studentno").value;
+        ws2.send(JSON.stringify({type:"catchtextno",studentno:thestudentno}));
+
+        ws2.onmessage=function (data) {
+            console.log(data)
+            var datas=JSON.parse(data.data)
+            console.log(datas);
+            var textarrays=datas.textnos;
+            console.log(textarrays)
+            for(var i=0;i<textarrays.length;i++){
+            $("#textno").append("<option value='"+textarrays[i]+"'>"+textarrays[i]+"</option>");
+        }}
+    }
