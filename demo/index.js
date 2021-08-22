@@ -223,7 +223,7 @@ document.getElementById("confirm").onclick=function(){
 
             var strs = quill.getText();
             var contents = quill.getContents();
-            ws.send(JSON.stringify({title: title, contents: strs, datas: contents,flags:flags }))
+            ws.send(JSON.stringify({type:"0",title: title, contents: strs, datas: contents,flags:flags }))
             flags=1;
          ws.onmessage = function (e) {
              if (e.data === "更新成功") {
@@ -231,16 +231,55 @@ document.getElementById("confirm").onclick=function(){
              }
          }
     }
-    window.onbeforeunload=function () {
-        ws.close()
-        ws2.close()
-        ws3.close()
+
+
+
+    document.getElementById("savethefirstarticle").onclick=function(){
+        var strs = quill.getText();
+        var contents = quill.getContents();
+        ws.send(JSON.stringify({type:"1",title: title, contents: strs, datas: contents,flags:flags }))
+        flags=1;
+        ws.onmessage = function (e) {
+            if (e.data === "更新成功") {
+                alert("一稿更新成功！");
+            }
+        }
+        document.getElementById("savethefirstarticle").setAttribute("disabled",true)
     }
 
-    // window.onload=function () {
+    document.getElementById("savethesecondarticle").onclick=function(){
+        var strs = quill.getText();
+        var contents = quill.getContents();
+        ws.send(JSON.stringify({type:"2",title: title, contents: strs, datas: contents,flags:flags }))
+        flags=1;
+        ws.onmessage = function (e) {
+            if (e.data === "更新成功") {
+                alert("二稿更新成功！");
+            }
+        }
+        document.getElementById("savethefirstarticle").setAttribute("disabled",true)
+    }
+
+    document.getElementById("savethesecondarticle").onclick=function(){
+        var strs = quill.getText();
+        var contents = quill.getContents();
+        ws.send(JSON.stringify({type:"3",title: title, contents: strs, datas: contents,flags:flags }))
+        flags=1;
+        ws.onmessage = function (e) {
+            if (e.data === "更新成功") {
+                alert("三稿更新成功！");
+            }
+        }
+        document.getElementById("savethethirdarticle").setAttribute("disabled",true)
+    }
 
 
 
+    window.onbeforeunload=function () {     //页面刷新或者是关闭的时候进行页面的刷新
+            ws.close()
+            ws2.close()
+            ws3.close()
+    }
 
 
 
