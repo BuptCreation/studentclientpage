@@ -257,10 +257,10 @@ document.getElementById("confirm").onclick=function(){
                 alert("二稿更新成功！");
             }
         }
-        document.getElementById("savethefirstarticle").setAttribute("disabled",true)
+        document.getElementById("savethesecondarticle").setAttribute("disabled",true)
     }
 
-    document.getElementById("savethesecondarticle").onclick=function(){
+    document.getElementById("savethefinalarticle").onclick=function(){
         var strs = quill.getText();
         var contents = quill.getContents();
         ws.send(JSON.stringify({type:"3",title: title, contents: strs, datas: contents,flags:flags }))
@@ -270,7 +270,7 @@ document.getElementById("confirm").onclick=function(){
                 alert("三稿更新成功！");
             }
         }
-        document.getElementById("savethethirdarticle").setAttribute("disabled",true)
+        document.getElementById("savethefinalarticle").setAttribute("disabled",true)
     }
 
 
