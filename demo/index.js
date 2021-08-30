@@ -15,9 +15,9 @@ import '../display.styl';
 let quill=null
 let title=null;
 let groupid=null;
-let ws2=new WebSocket("ws://localhost:3335");
+let ws2=new WebSocket("ws://47.94.108.20:3335");
 // document.getElementById("confirm").onclick=function() {
-let ws3=new WebSocket("ws://localhost:3336")
+let ws3=new WebSocket("ws://47.94.108.20:3336")
 
 document.getElementById("confirm").onclick=function(){
 
@@ -141,7 +141,7 @@ document.getElementById("confirm").onclick=function(){
             });
 
             console.log(title)
-            let websocketEndpoint = "ws://127.0.0.1:8085";
+            let websocketEndpoint = "ws://47.94.108.20:8085";
 
             editor.syncThroughWebsocket(websocketEndpoint, "examples",title);
 
@@ -217,7 +217,7 @@ document.getElementById("confirm").onclick=function(){
 
 
 
-    let ws = new WebSocket("ws://localhost:3334")       //点击保存数据库的按钮，数据会被保存进数据库
+    let ws = new WebSocket("ws://47.94.108.20:3334")       //点击保存数据库的按钮，数据会被保存进数据库
     let flags=0;
     document.getElementById("savetomongodb").onclick = function () {
 

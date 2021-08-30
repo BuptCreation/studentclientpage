@@ -5,7 +5,7 @@
             <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
             <!--美化包        -->
             <!--        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">-->
-            <link rel="stylesheet" href="/blot/style-back.css">
+            <link rel="stylesheet" type="text/css" href="/blot/style-back.css">
             <style>
                 /*美化包 以下*/
                 .button {
@@ -32,11 +32,12 @@
                 }
 
                 .button span:after {
-                    content: '';
+                    font-size: 20px;
+                    content: '☺';
                     position: absolute;
                     opacity: 0;
                     top: 0;
-                    right: -20px;
+                    right: -30px;
                     transition: 0.5s;
                 }
 
@@ -46,7 +47,7 @@
 
                 .button:hover span:after {
                     opacity: 1;
-                    right: 0;
+                    right: -10px;
                 }
                 .chat{
                     border:2px solid #8a6d3b;
@@ -118,10 +119,10 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li><a href="pages/Student/My.jsp">我的&nbsp;</a></li>
+                <li><a href="http://47.94.108.20:8080/BuptCreationEE/pages/Student/My.jsp">我的&nbsp;</a></li>
                 <li class="active"><a href="http://localhost:9001">协同写作</a></li>
-                <li><a href="pages/Student/Showblog.jsp">作品评论</a></li>
-                <li><a href="pages/Student/ChatRoom.jsp">聊天室</a></li>
+                <li><a href="http://47.94.108.20:8080/BuptCreationEE/pages/Student/Showblog.jsp">作品评论</a></li>
+                <li><a href="http://47.94.108.20:8080/BuptCreationEE/pages/Student/ChatRoom.jsp">聊天室</a></li>
             </ul>
         </div>
         </div>
@@ -173,7 +174,7 @@
         </form>
         <div class="alert alert-info">
             <span class="glyphicon glyphicon-tags" ></span>文章要求！
-            <input class="col-sm-offset-1 control-label" style="width:1600px;height: 200px" type="text" id="textdescription" value="" placeholder="文章要求" disabled="true">
+            <input class="col-sm-offset-1 control-label" style="width:60%;height: 50px;overflow-y:scroll" type="text" id="textdescription" value="" placeholder="文章要求" disabled="true">
         </div>
 
         <!-- 协同写作业样式很好           -->
@@ -234,6 +235,13 @@
                     text: '行为/写作分析图表',
                     left: 'center'
                 },
+                tooltip:{
+                    tooltip:'axis'
+                },
+                legend: {
+                    top:'10%',
+                    data:window.jsondata
+                },
                 series: [
                     {
                         name: '写作参与情况',
@@ -266,9 +274,16 @@
                     text: '行为/登录频率分析图表',
                     left: 'center'
                 },
+                tooltip:{
+                    tooltip:'axis'
+                },
+                legend: {
+                    top:'10%',
+                    data:window.jsondata1
+                },
                 series: [
                     {
-                        name: '写作参与情况',
+                        name: '行为/登录频率分析图表',
                         type: 'pie',
                         radius: '50%',
                         // data:window.jsondata,
@@ -300,9 +315,16 @@
                     text: '行为/交谈频率分析图表',
                     left: 'center'
                 },
+                tooltip:{
+                    tooltip:'axis'
+                },
+                legend: {
+                    top:'10%',
+                    data:window.jsondata2
+                },
                 series: [
                     {
-                        name: '写作参与情况',
+                        name: '行为/交谈频率分析图表',
                         type: 'pie',
                         radius: '50%',
                         // data:window.jsondata,
