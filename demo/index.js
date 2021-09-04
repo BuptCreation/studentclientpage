@@ -19,11 +19,16 @@ let ws2=new WebSocket("ws://47.94.108.20:3335");
 // document.getElementById("confirm").onclick=function() {
 let ws3=new WebSocket("ws://47.94.108.20:3336")
 
-document.getElementById("confirm").onclick=function(){
+    document.getElementById("confirm").onclick=function(){
+//初始化
+        var edit= document.getElementById("editor")
+        edit.innerHTML="<div class=\"editor-container\" id=\"container\"></div>";
+
 
     var studentno=document.getElementById("studentno").value
 
     title=document.getElementById("textno").value
+
 
 
     var data=JSON.stringify({type:"orignal",textno:title,studentno:studentno})
